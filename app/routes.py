@@ -1,14 +1,14 @@
-fom flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User
+from app.models import User, Movie
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request
 from werkzeug.urls import url_parse
 from app import db
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, CreateMovieForm
 from datetime import datetime
 from app.forms import PostForm
 from app.models import Post
@@ -183,3 +183,15 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+@app.route('/add_movie', methods=['GET', 'POST'])
+@login_required
+def add_movie():
+    form = CreateMovieForm()
+    if form.validate_on_submit():
+        new_movie = Movie(title=form.title.data, genre=form.genre.data, votes=0)
+        db.session.add(new_movie)
+        db.session.commit()
+        flash('Congratulations, you are now added a new movie')
+        return redirect(url_for('add_movie'))
+    return render_template('add_movie.html', title='Add Movie', form=form)
