@@ -126,3 +126,12 @@ class Polls(Base):
     def __repr__(self):
         # a user friendly way to view our objects in the terminal
         return self.option.name
+
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), index=True, unique=True)
+    genre = db.Column(db.String(50))
+    votes = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<Movie {}'.format(self.title)
