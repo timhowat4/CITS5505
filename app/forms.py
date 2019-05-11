@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from app.models import User
+from app.models import User, Movie
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -56,3 +56,13 @@ class ResetPasswordForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
+
+class CreateMovieForm(FlaskForm):
+    title = StringField('Movie Title', validators=[DataRequired()])
+    genre = SelectField('Genre(s)', choices=[('Action', 'action'), ('Comedy', 'comedy'), ('Drama', 'drama'), ('Horror', 'horror'), ('Adventure', 'adventure')])
+    submit = SubmitField('Submit')
+
+    def validate_title(self, title):
+        movie = Movie.query.filter_by(title=title.data).first()
+        if movie is not None:
+            raise ValidationError('This movie already exists')
