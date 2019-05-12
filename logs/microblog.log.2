@@ -1,15 +1,4 @@
-2019-05-08 17:36:34,424 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:37:40,973 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:37:49,672 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:38:01,517 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:38:07,710 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:38:14,979 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:38:25,059 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:38:52,072 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:39:01,785 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:39:18,348 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:41:09,148 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:41:13,786 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+2019-05-11 20:25:30,049 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -25,10 +14,10 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 190, in add_movie
-    form = CreateMovieForm()
-NameError: name 'CreateMovieForm' is not defined
-2019-05-08 17:41:29,514 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 210, in vote
+    movie2.votes += 1
+AttributeError: 'NoneType' object has no attribute 'votes'
+2019-05-11 20:26:39,271 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -44,12 +33,10 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 190, in add_movie
-    form = CreateMovieForm()
-NameError: name 'CreateMovieForm' is not defined
-2019-05-08 17:42:08,318 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:45:16,459 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-08 17:45:24,846 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 206, in vote
+    movie1.votes += 1
+AttributeError: 'NoneType' object has no attribute 'votes'
+2019-05-11 20:26:58,596 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -65,21 +52,32 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
-    return render_template('add_movie.html', title='Add Movie', form=form)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 206, in vote
+    movie1.votes += 1
+AttributeError: 'NoneType' object has no attribute 'votes'
+2019-05-11 20:27:18,580 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-jinja2.exceptions.TemplateRuntimeError: extended multiple times
-2019-05-11 09:58:41,023 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 214, in vote
+    movie3.votes += 1
+AttributeError: 'NoneType' object has no attribute 'votes'
+2019-05-12 14:07:53,950 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 14:15:58,962 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 14:18:19,029 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 14:45:15,597 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 14:45:22,575 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 14:45:35,247 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-12 15:02:03,318 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]

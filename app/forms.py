@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms.validators import ValidationError, DataRequired, InputRequired, Email, EqualTo, Length
 from app.models import User, Movie
 
 class LoginForm(FlaskForm):
@@ -59,10 +59,42 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateMovieForm(FlaskForm):
     title = StringField('Movie Title', validators=[DataRequired()])
-    genre = SelectField('Genre(s)', choices=[('Action', 'action'), ('Comedy', 'comedy'), ('Drama', 'drama'), ('Horror', 'horror'), ('Adventure', 'adventure')])
+    genre = SelectField('Genre(s)', choices=[('Please Select', 'Please Select'), ('Action', 'action'), ('Comedy', 'comedy'), ('Drama', 'drama'), ('Horror', 'horror'), ('Adventure', 'adventure')])
     submit = SubmitField('Submit')
 
     def validate_title(self, title):
         movie = Movie.query.filter_by(title=title.data).first()
         if movie is not None:
             raise ValidationError('This movie already exists')
+
+    def validate_genre(self, genre):
+        if genre.data == 'Please Select':
+            raise ValidationError('Please select a genre')
+
+class VoteForm(FlaskForm):
+    vote1 = SelectField('Movie Vote #1', choices=[('Please Select', 'Please Select')])
+    vote2 = SelectField('Movie Vote #2', choices=[('Please Select', 'Please Select')])
+    vote3 = SelectField('Movie Vote #3', choices=[('Please Select', 'Please Select')])
+    vote4 = SelectField('Movie Vote #4', choices=[('Please Select', 'Please Select')])
+    vote5 = SelectField('Movie Vote #5', choices=[('Please Select', 'Please Select')])
+    submit = SubmitField('Submit')
+
+    def validate_vote1(self, vote1):
+        if vote1.data == 'Please Select':
+            raise ValidationError('Please select a movie')
+
+    def validate_vote2(self, vote2):
+        if vote2.data == 'Please Select':
+            raise ValidationError('Please select a movie')
+
+    def validate_vote3(self, vote3):
+        if vote3.data == 'Please Select':
+            raise ValidationError('Please select a movie')
+
+    def validate_vote4(self, vote4):
+        if vote4.data == 'Please Select':
+            raise ValidationError('Please select a movie')
+
+    def validate_vote5(self, vote5):
+        if vote5.data == 'Please Select':
+            raise ValidationError('Please select a movie')

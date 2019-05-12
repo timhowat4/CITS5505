@@ -30,6 +30,12 @@ class User(UserMixin, db.Model):
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+    voted = db.Column(db.Boolean)    
+    movie_vote1 = db.Column(db.String(64))
+    movie_vote2 = db.Column(db.String(64))
+    movie_vote3 = db.Column(db.String(64))
+    movie_vote4 = db.Column(db.String(64))
+    movie_vote5 = db.Column(db.String(64))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
