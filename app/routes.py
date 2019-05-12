@@ -8,7 +8,7 @@ from flask_login import login_required
 from flask import request
 from werkzeug.urls import url_parse
 from app import db
-from app.forms import RegistrationForm, CreateMovieForm
+from app.forms import RegistrationForm, CreateMovieForm, VoteForm
 from datetime import datetime
 from app.forms import PostForm
 from app.models import Post
@@ -194,4 +194,56 @@ def add_movie():
         db.session.commit()
         flash('Congratulations, you are now added a new movie')
         return redirect(url_for('add_movie'))
-    return render_template('add_movie.html', title='Add Movie', form=form)
+    movie_list = Movie.query.all()
+    return render_template('add_movie.html', title='Add Movie', movie_list=movie_list, form=form)
+
+@app.route('/vote', methods=['GET', 'POST'])
+@login_required
+def vote():
+    form = VoteForm()
+    choices = [('Please Select', 'Please Select')]
+    movies = Movie.query.all()
+    for m in movies:
+        choices.append((m.title, m.title))
+    form.vote1.choices = choices
+    form.vote2.choices = choices
+    form.vote3.choices = choices
+    form.vote4.choices = choices
+    form.vote5.choices = choices
+    if form.validate_on_submit():
+        movie1 = Movie.query.filter_by(title=form.vote1.data).first()
+        movie1.votes += 1
+        db.session.commit()
+
+        movie2 = Movie.query.filter_by(title=form.vote2.data).first()
+        movie2.votes += 1
+        db.session.commit()
+
+        movie3 = Movie.query.filter_by(title=form.vote3.data).first()
+        movie3.votes += 1
+        db.session.commit()
+
+        movie4 = Movie.query.filter_by(title=form.vote4.data).first()
+        movie4.votes += 1
+        db.session.commit()
+
+        movie5 = Movie.query.filter_by(title=form.vote5.data).first()
+        movie5.votes += 1
+        db.session.commit()
+
+        username = current_user.username
+        user = User.query.filter_by(username=username).first()
+        user.voted = True
+        db.session.commit()
+
+        user.movie_vote1 = form.vote1.data
+        user.movie_vote2 = form.vote2.data
+        user.movie_vote3 = form.vote3.data
+        user.movie_vote4 = form.vote4.data
+        user.movie_vote5 = form.vote5.data
+        db.session.commit()
+
+        flash("Thank you your votes have been submitted")
+        return redirect(url_for('vote'))
+    movie_list = Movie.query.all()
+    return render_template("vote.html", title="Vote", movie_list=movie_list, form=form)

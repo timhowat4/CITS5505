@@ -1,12 +1,18 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
 {% block app_content %}
-    <table class="table table-hover">
+    <div class="col-md-8">
+      <table class="table table-hover">
         <tr>
             <td width="256px"><img src="{{ user.avatar(256) }}"></td>
             <td>
                 <h1>User: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                {% if user.voted != True %}
+                <p> {{user.username}} has not voted </p>
+                {% endif %}
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                 {% if user == current_user %}
                 <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
@@ -17,7 +23,24 @@
                 {% endif %}
             </td>
         </tr>
-    </table>
+      </table>
+    </div>
+    <div class ="col-md-4">
+      {% if user.voted == True %}
+      <table class="table table-hover">
+        <tr>
+            <td>
+                <h1>Movie Votes</h1>
+                <p>{{ user.movie_vote1 }}</p>
+                <p>{{ user.movie_vote2 }}</p>
+                <p>{{ user.movie_vote3 }}</p>
+                <p>{{ user.movie_vote4 }}</p>
+                <p>{{ user.movie_vote5 }}</p>
+            </td>
+        </tr>
+      </table>
+      {% endif %}
+    </div>
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
