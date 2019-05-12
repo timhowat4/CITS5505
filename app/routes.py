@@ -194,7 +194,8 @@ def add_movie():
         db.session.commit()
         flash('Congratulations, you are now added a new movie')
         return redirect(url_for('add_movie'))
-    movie_list = Movie.query.all()
+    movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
+    movie_list = movies.all()
     return render_template('add_movie.html', title='Add Movie', movie_list=movie_list, form=form)
 
 @app.route('/vote', methods=['GET', 'POST'])
@@ -245,12 +246,14 @@ def vote():
 
         flash("Thank you your votes have been submitted")
         return redirect(url_for('vote'))
-    movie_list = Movie.query.all()
+    movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
+    movie_list = movies.all()
     return render_template("vote.html", title="Vote", movie_list=movie_list, form=form)
 
 @app.route('/leaderboard', methods=['GET', 'POST'])
 def leaderboard():
-    movie_list = Movie.query.all()
+    movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
+    movie_list = movies.all()
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
