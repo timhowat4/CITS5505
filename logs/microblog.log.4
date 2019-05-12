@@ -1,4 +1,6 @@
-2019-05-11 10:18:04,218 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+2019-05-11 16:50:42,578 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:51:24,633 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:51:46,082 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,24 +16,21 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
-    return render_template('add_movie.html', title='Add Movie', form=form)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-jinja2.exceptions.TemplateRuntimeError: extended multiple times
-2019-05-11 10:18:08,647 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 206, in vote
+    movie1.votes += 1
+AttributeError: 'BaseQuery' object has no attribute 'votes'
+2019-05-11 16:53:41,297 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:56:56,390 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:57:09,579 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -47,27 +46,43 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
-    return render_template('add_movie.html', title='Add Movie', form=form)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 205, in vote
+    movie1 = Movie.query.filter_by(title=form.vote1).first()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3215, in first
+    ret = list(self[0:1])
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3007, in __getitem__
+    return list(res)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3317, in __iter__
+    return self._execute_and_instances(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3342, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 128, in reraise
     raise value.with_traceback(tb)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-jinja2.exceptions.TemplateRuntimeError: extended multiple times
-2019-05-11 10:20:06,987 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 10:22:57,606 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 10:24:09,829 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 10:24:19,398 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) Error binding parameter 0 - probably unsupported type.
+[SQL: SELECT movie.id AS movie_id, movie.title AS movie_title, movie.genre AS movie_genre, movie.votes AS movie_votes 
+FROM movie 
+WHERE movie.title = ?
+ LIMIT ? OFFSET ?]
+[parameters: (<wtforms.fields.core.SelectField object at 0x1098e39e8>, 1, 0)]
+(Background on this error at: http://sqlalche.me/e/rvf5)
+2019-05-11 16:59:01,691 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 20:19:22,046 ERROR: Exception on /vote [POST] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -83,33 +98,7 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
-    return render_template('add_movie.html', title='Add Movie', form=form)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-jinja2.exceptions.TemplateRuntimeError: extended multiple times
-2019-05-11 10:25:58,606 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 10:26:42,803 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 13:10:02,882 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:04:27,748 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:24:47,386 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:26:15,436 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:29:23,635 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:33:20,278 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:34:39,518 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 15:38:03,463 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 16:09:18,879 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 16:10:17,055 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
-2019-05-11 16:23:51,171 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 214, in vote
+    movie3.votes += 1
+AttributeError: 'NoneType' object has no attribute 'votes'
+2019-05-11 20:25:18,704 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
