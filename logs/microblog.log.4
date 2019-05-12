@@ -1,0 +1,115 @@
+2019-05-11 10:18:04,218 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
+    return render_template('add_movie.html', title='Add Movie', form=form)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+jinja2.exceptions.TemplateRuntimeError: extended multiple times
+2019-05-11 10:18:08,647 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
+    return render_template('add_movie.html', title='Add Movie', form=form)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+jinja2.exceptions.TemplateRuntimeError: extended multiple times
+2019-05-11 10:20:06,987 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 10:22:57,606 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 10:24:09,829 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 10:24:19,398 ERROR: Exception on /add_movie [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/routes.py", line 197, in add_movie
+    return render_template('add_movie.html', title='Add Movie', form=form)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/app/templates/add_movie.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+jinja2.exceptions.TemplateRuntimeError: extended multiple times
+2019-05-11 10:25:58,606 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 10:26:42,803 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 13:10:02,882 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:04:27,748 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:24:47,386 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:26:15,436 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:29:23,635 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:33:20,278 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:34:39,518 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 15:38:03,463 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:09:18,879 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:10:17,055 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
+2019-05-11 16:23:51,171 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/app/__init__.py:50]
