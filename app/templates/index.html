@@ -7,9 +7,11 @@
     <p style="color:blue;"> Welcome to MovieVote! A page where you can vote on your favourite movies,
        and discuss your choices with fellow movie lovers. <p>
     {% if form %}
+    <h2> Welcome to MovieVote! </h2>
     {{ wtf.quick_form(form) }}
     <br>
     {% endif %}
+    <h4> See what your followed users have been up to! </h4>
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
