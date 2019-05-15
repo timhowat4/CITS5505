@@ -106,3 +106,12 @@ class VoteForm(FlaskForm):
     def validate_vote5(self, vote5):
         if vote5.data == 'Please Select':
             raise ValidationError('Please select a movie')
+
+class SuggestForm(FlaskForm):
+    post = StringField('Suggest a movie to add', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def validate_post(self, post):
+        movie = Movie.query.filter_by(title=post.data).first()
+        if movie is not None:
+            raise ValidationError('This movie already exists')
