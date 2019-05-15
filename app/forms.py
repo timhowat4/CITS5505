@@ -71,6 +71,14 @@ class CreateMovieForm(FlaskForm):
         if genre.data == 'Please Select':
             raise ValidationError('Please select a genre')
 
+class DeleteMovieForm(FlaskForm):
+    title = SelectField('Select a movie to delete', choices=[('Please Select', 'Please Select')])
+    submit = SubmitField('Submit')
+
+    def validate_title(self, title):
+        if title.data == 'Please Select':
+            raise ValidationError('Please select a movie')
+
 class VoteForm(FlaskForm):
     vote1 = SelectField('Movie Vote #1', choices=[('Please Select', 'Please Select')])
     vote2 = SelectField('Movie Vote #2', choices=[('Please Select', 'Please Select')])
