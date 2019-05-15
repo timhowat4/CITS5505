@@ -8,7 +8,7 @@ from flask_login import login_required
 from flask import request
 from werkzeug.urls import url_parse
 from app import db
-from app.forms import RegistrationForm, CreateMovieForm, VoteForm, DeleteMovieForm
+from app.forms import RegistrationForm, CreateMovieForm, VoteForm, DeleteMovieForm, SuggestForm
 from datetime import datetime
 from app.forms import PostForm
 from app.models import Post
@@ -72,8 +72,8 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
+        user = User(username=form.username.data, email=form.email.data, admin=False)
+        user.admin
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
@@ -278,3 +278,22 @@ def leaderboard():
     prev_url = url_for('explore', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template("leaderboard.html", title="Leaderboard", movie_list=movie_list, posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+@app.route('/suggestions', methods=['GET', 'POST'])
+@login_required
+def suggestions():
+    form = SuggestForm()
+    if form.validate_on_submit():
+        new_post = Post(body=form.post.data, author=current_user)
+        db.session.add(new_post)
+        db.session.commit()
+        flash("Thank you for your suggestion")
+        return redirect(url_for('suggestions'))
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('suggestions', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('suggestions', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template("suggestions.html", title="suggestions", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
