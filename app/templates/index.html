@@ -5,9 +5,11 @@
     <h1>Hi, {{ current_user.username }}!</h1>
     {% endif %}
     {% if form %}
+    <h2> Welcome to MovieVote! </h2>
     {{ wtf.quick_form(form) }}
     <br>
     {% endif %}
+    <h4> See what your followed users have been up to! </h4>
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
