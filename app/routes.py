@@ -8,7 +8,7 @@ from flask_login import login_required
 from flask import request
 from werkzeug.urls import url_parse
 from app import db
-from app.forms import RegistrationForm, CreateMovieForm, VoteForm
+from app.forms import RegistrationForm, CreateMovieForm, VoteForm, DeleteMovieForm
 from datetime import datetime
 from app.forms import PostForm
 from app.models import Post
@@ -26,6 +26,7 @@ def before_request():
 @login_required
 def index():
     form = PostForm()
+    user = User.query.filter_by(username=current_user.username).first()
     if form.validate_on_submit():
         post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
@@ -41,7 +42,7 @@ def index():
         if posts.has_prev else None
     return render_template('index.html', title='Home', form=form,
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+                           prev_url=prev_url, user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -184,19 +185,34 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
-@app.route('/add_movie', methods=['GET', 'POST'])
+@app.route('/add_delete_movie', methods=['GET', 'POST'])
 @login_required
-def add_movie():
-    form = CreateMovieForm()
-    if form.validate_on_submit():
-        new_movie = Movie(title=form.title.data, genre=form.genre.data, votes=0)
+def add_delete_movie():
+    Add_form = CreateMovieForm()
+    if Add_form.validate_on_submit():
+        new_movie = Movie(title=Add_form.title.data, genre=Add_form.genre.data, votes=0)
         db.session.add(new_movie)
         db.session.commit()
         flash('Congratulations, you are now added a new movie')
-        return redirect(url_for('add_movie'))
+        return redirect(url_for('add_delete_movie'))
+
+    Delete_form = DeleteMovieForm()
+    movies = Movie.query.all()
+    choices = [('Please Select', 'Please Select')]
+    for m in movies:
+        choices.append((m.title, m.title))
+    Delete_form.title.choices = choices
+
+    if Delete_form.validate_on_submit():
+        delete_movie = Movie.query.filter_by(title=Delete_form.title.data).first()
+        db.session.delete(delete_movie)
+        db.session.commit()
+        flash('You successfully deleted the movie')
+        return redirect(url_for('add_delete_movie'))
+
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
-    return render_template('add_movie.html', title='Add Movie', movie_list=movie_list, form=form)
+    return render_template('add_delete_movie.html', title='Add Movie', title2='Delete Movie', movie_list=movie_list, add_form=Add_form, delete_form=Delete_form)
 
 @app.route('/vote', methods=['GET', 'POST'])
 @login_required
