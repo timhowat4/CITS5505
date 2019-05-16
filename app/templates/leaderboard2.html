@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+
+    <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto">
+      {% if current_user.is_anonymous %}
+      <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}"> <i class="fa fa-user-o" aria-hidden="true"></i> Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+      </li>
+      {% endif %}
+    </ul>
+
+  </nav>
+
+{% endblock %}
+
+{% block app_content%}
+  <div id="wrapper">
+
+
+    <!-- Sidebar -->
+
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('vote') }}">
+          <i class="fa fa-imdb" aria-hidden="true"></i> Vote
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('suggestions') }}">
+          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+        </a>
+      </li>
+    </ul>
+
+    <!-- Content -->
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Leaderboard</a>
+          </li>
+          <li class="breadcrumb-item active">Overview</li>
+        </ol>
+
+        <!-- Area Chart Example-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i>
+            </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Votes</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Votes</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  {% for movie in movie_list %}
+                      {% include '_movie_list.html' %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+            <form action="" method="post" role="form">
+              {{ form.csrf }}
+              <div class="form-group">
+                <label for="post">Say something</label>
+                <input type="text" class="form-control" id="post" name="post">
+                <br>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% for post in posts %}
+          {% include '_post.html' %}
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
