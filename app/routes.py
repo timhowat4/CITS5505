@@ -10,7 +10,7 @@ from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm, CreateMovieForm, VoteForm, DeleteMovieForm, SuggestForm
 from datetime import datetime
-from app.forms import PostForm
+from app.forms import PostForm, AdminForm
 from app.models import Post
 from app.forms import ResetPasswordRequestForm
 from app.email import send_password_reset_email
@@ -28,7 +28,7 @@ def index():
     form = PostForm()
     user = User.query.filter_by(username=current_user.username).first()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        post = Post(body=form.post.data, author=current_user, topic_type="General")
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -73,7 +73,6 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, admin=False)
-        user.admin
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
@@ -91,8 +90,24 @@ def user(username):
         if posts.has_next else None
     prev_url = url_for('user', username=user.username, page=posts.prev_num) \
         if posts.has_prev else None
+
+    admin_form = AdminForm()
+    users = User.query.filter(User.username!=username).all()
+    choices = [('Please Select', 'Please Select')]
+    for u in users:
+        choices.append((u.username, u.username))
+
+    admin_form.username.choices = choices
+
+    if admin_form.validate_on_submit():
+        user = User.query.filter_by(username=admin_form.username.data).first()
+        user.admin = True
+        db.session.commit()
+        flash("User is now an admin")
+        return redirect(url_for('user'))
+
     return render_template('user.html', user=user, posts=posts.items,
-                           next_url=next_url, prev_url=prev_url)
+                           next_url=next_url, prev_url=prev_url, admin_form=admin_form)
 
 from app.forms import EditProfileForm
 
@@ -268,6 +283,18 @@ def vote():
 
 @app.route('/leaderboard', methods=['GET', 'POST'])
 def leaderboard():
+    form = PostForm()
+    if request.method == 'POST':
+        post=request.form['post']
+
+        if form.validate_on_submit():
+            new_post = Post(body=post, author=current_user, topic_type="leaderboard")
+            db.session.add(new_post)
+            db.session.commit()
+            flash("Thank you for your comment")
+            return redirect(url_for('leaderboard'))
+        else:
+            flash('Error')
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
     page = request.args.get('page', 1, type=int)
@@ -277,23 +304,21 @@ def leaderboard():
         if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template("leaderboard.html", title="Leaderboard", movie_list=movie_list, posts=posts.items, next_url=next_url, prev_url=prev_url)
+    return render_template("leaderboard2.html", title="Leaderboard", form = form, movie_list=movie_list, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 @app.route('/suggestions', methods=['GET', 'POST'])
 @login_required
 def suggestions():
     form = SuggestForm()
     if form.validate_on_submit():
-        new_post = Post(body=form.post.data, author=current_user)
+        new_post = Post(body=form.post.data, author=current_user, topic_type="Suggestion")
         db.session.add(new_post)
         db.session.commit()
         flash("Thank you for your suggestion")
         return redirect(url_for('suggestions'))
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('suggestions', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('suggestions', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template("suggestions.html", title="suggestions", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+    posts = db.session.query(Post).filter_by(topic_type="Suggestion").order_by(Post.timestamp.desc()).from_self()
+    ##posts = Post.query.filter_by(topic_type="Suggestion").order_by(Post.timestamp.desc()).paginate(
+    ##    page, app.config['POSTS_PER_PAGE'], False)
+    ##osts = posts.filter_by(topic_type="Suggestion")
+    return render_template("suggestions.html", title="suggestions", form=form, posts=posts)
