@@ -25,12 +25,13 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    admin = db.Column(db.Boolean)
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
-    voted = db.Column(db.Boolean)    
+    voted = db.Column(db.Boolean)
     movie_vote1 = db.Column(db.String(64))
     movie_vote2 = db.Column(db.String(64))
     movie_vote3 = db.Column(db.String(64))
@@ -89,7 +90,8 @@ class Post(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    topic_type = db.Column(db.String(20))
+    
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 

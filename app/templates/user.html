@@ -7,7 +7,11 @@
         <tr>
             <td width="256px"><img src="{{ user.avatar(256) }}"></td>
             <td>
+                {% if user.admin == True %}
+                <h1>Admin: {{ user.username }}</h1>
+                {% else %}
                 <h1>User: {{ user.username }}</h1>
+                {% endif %}
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
                 {% if user.voted != True %}
@@ -41,6 +45,11 @@
       </table>
       {% endif %}
     </div>
+    {% if user.admin == True %}
+    <div class = "col-md-4">
+      {{ wtf.quick_form(admin_form) }}
+    </div>
+    {% endif %}
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}

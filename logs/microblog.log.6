@@ -1,111 +1,100 @@
-2019-05-12 17:28:19,489 ERROR: Exception on /leaderboard [GET] [in /Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py:1761]
+2019-05-16 01:58:34,600 ERROR: Exception on /index [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/21515393/Documents/project/CITS5505/app/routes.py", line 253, in leaderboard
-    return render_template("leaderboard.html", title="Leaderboard")
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/routes.py", line 45, in index
+    prev_url=prev_url, user=user)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
     context, ctx.app)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
     rv = template.render(context)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
     return original_render(self, *args, **kwargs)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
     return self.environment.handle_exception(exc_info, True)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/Users/21515393/Documents/project/CITS5505/app/templates/leaderboard.html", line 2, in top-level template code
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/templates/index.html", line 2, in top-level template code
     {% import 'bootstrap/wtf.html' as wtf %}
-  File "/Users/21515393/Documents/project/CITS5505/app/templates/base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
-    {%- block html %}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
-    {% block body -%}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
-    {% block content -%}
-  File "/Users/21515393/Documents/project/CITS5505/app/templates/base.html", line 47, in block "content"
-    {% block app_content %}{% endblock %}
-  File "/Users/21515393/Documents/project/CITS5505/app/templates/leaderboard.html", line 8, in block "app_content"
-    {{ wtf.quick_form(form) }}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
-    rv = self._func(*arguments)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/wtf.html", line 200, in template
-    {{ form.hidden_tag() }}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
-2019-05-12 17:32:25,557 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 17:41:32,534 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 17:45:57,149 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 17:47:54,392 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 17:49:30,433 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 17:52:57,062 INFO: Microblog startup [in /Users/21515393/Documents/project/CITS5505/app/__init__.py:50]
-2019-05-12 18:01:09,555 ERROR: Exception on /apple-touch-icon-precomposed.png [GET] [in /Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1791, in dispatch_request
-    self.raise_routing_exception(req)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1774, in raise_routing_exception
-    raise request.routing_exception
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/ctx.py", line 336, in match_request
-    self.url_adapter.match(return_rule=True)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1960, in match
-    raise NotFound()
-werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1713, in handle_user_exception
-    return self.handle_http_exception(e)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1644, in handle_http_exception
-    return handler(e)
-  File "/Users/21515393/Documents/project/CITS5505/app/errors.py", line 6, in not_found_error
-    return render_template('404.html'), 404
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/templates/base.html", line 14, in top-level template code
+    background-image: url("{{ url_for('images', filename='Interstellar.jpeg') }}");
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2061, in handle_url_build_error
     reraise(exc_type, exc_value, tb)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/helpers.py", line 345, in url_for
+    force_external=external)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/werkzeug/routing.py", line 2181, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'images' with values ['filename']. Did you mean 'index' instead?
+2019-05-16 02:07:48,913 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:16:12,491 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:19:44,658 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:27:00,295 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:30:57,782 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:36:01,863 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:37:30,149 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:40:20,017 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:42:29,400 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]
+2019-05-16 02:42:33,120 ERROR: Exception on /index [GET] [in /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/routes.py", line 45, in index
+    prev_url=prev_url, user=user)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/Users/21515393/Documents/project/CITS5505/app/templates/404.html", line 1, in template
-    {% extends base.html" %}
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/parser.py", line 888, in subparse
-    self.stream.expect('block_end')
-  File "/Users/21515393/microblog/venv/lib/python3.6/site-packages/jinja2/lexer.py", line 384, in expect
-    self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: expected token 'end of statement block', got 'string'
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/templates/base.html", line 49, in top-level template code
+    <img src={{ url_for('images', filename='Endgame.jpeg') }} alt="Smiley face" height="42" width="42">
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/app.py", line 2061, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/flask/helpers.py", line 345, in url_for
+    force_external=external)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/werkzeug/routing.py", line 2181, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'images' with values ['filename']. Did you mean 'index' instead?
+2019-05-16 02:44:01,117 INFO: Microblog startup [in /Users/timhowat/Documents/Uni/AgileWeb/CITS5505/app/__init__.py:50]

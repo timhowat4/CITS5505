@@ -115,3 +115,12 @@ class SuggestForm(FlaskForm):
         movie = Movie.query.filter_by(title=post.data).first()
         if movie is not None:
             raise ValidationError('This movie already exists')
+
+class AdminForm(FlaskForm):
+    username = SelectField('Select a user to grant admin status', choices =[('Please Select', 'Please Select')])
+    submit = SubmitField('Submit')
+
+    def validate_user(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user.admin is True:
+            raise ValidationError('This user is already an admin')
