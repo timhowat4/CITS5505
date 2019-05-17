@@ -5,7 +5,7 @@
     <div class="row">
         <div class="pageinfo text-light bg-dark">  <!-- myClassName is defined in my CSS as you defined your container -->
             <h1 class="text-center"> Welcome To MovieVote </h1>
-            <p class="text-center"> Here we need your opinions on your favourite movies to once and for all see who comes out on top <p>
+            <p class="text-center"> At MovieVote, we need your opinions on your favourite movies to once and for all see what comes out on top. <p>
         </div>
     </div>
 </div>
@@ -21,15 +21,20 @@
         <div class="carousel-item active">
           <img class="d-block w-100" src="{{ url_for('static', filename='Interstellar2.jpg') }}" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
-                <h5>My Caption Title (1st Image)</h5>
-                <p>The whole caption will only show up if the screen is at least medium size.</p>
+                <h5>Movies take us to other worlds..</h5>
             </div>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="{{ url_for('static', filename='Endgame3.png') }}" alt="Second slide">
+          <img class="d-block w-100" src="{{ url_for('static', filename='Endgame3.png') }}" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Movies inspire us..</h5>
+            </div>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="{{ url_for('static', filename='HarryPotterDeathlyHallows2.jpg') }}" alt="Third slide">
+          <img class="d-block w-100" src="{{ url_for('static', filename='HarryPotterDeathlyHallows2.jpg') }}" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Movies bring magic to our lives..</h5>
+            </div>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
