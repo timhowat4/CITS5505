@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
 
-    <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+    <a class="navbar-brand mr-1" href="{{ url_for('index') }}">MovieVote</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fa fa-bars"></i>
@@ -38,13 +38,18 @@
 
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('vote') }}">
-          <i class="fa fa-imdb" aria-hidden="true"></i> Vote
+        <a class="nav-link" href="{{ url_for('leaderboard') }}">
+          <i class="fa fa-imdb" aria-hidden="true"></i> Leaderboard
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('suggestions') }}">
           <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('vote') }}">
+          <i class="fa fa-commenting" aria-hidden="true"></i> Vote
         </a>
       </li>
     </ul>
