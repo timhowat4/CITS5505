@@ -25,6 +25,7 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_vote = db.Column(db.DateTime, default=None)
     admin = db.Column(db.Boolean)
     followed = db.relationship(
         'User', secondary=followers,
@@ -91,7 +92,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     topic_type = db.Column(db.String(20))
-    
+
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
@@ -140,6 +141,7 @@ class Movie(db.Model):
     title = db.Column(db.String(50), index=True, unique=True)
     genre = db.Column(db.String(50))
     votes = db.Column(db.Integer)
+    latest_vote = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Movie {}'.format(self.title)
