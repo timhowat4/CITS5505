@@ -1,5 +1,10 @@
-<img class="d-flex mr-3 rounded-circle" src="{{ post.author.avatar(70) }}" alt="">
-<div class="media mb4">
-  <h5 class="mt-0">  {{ post.author.username }} </h5>
-    <p>{{ post.body }}</p>
+<div class = "container-fluid">
+  <div class="media mb4">
+    <img class="d-flex mr-3 rounded-circle" src="{{ post.author.avatar(70) }}" alt="">
+    <div class= "media-body">
+      <h5 class="mt-0">  {{ post.author.username }} </h5>
+        <p>{{ post.body }}</p>
+        <p class = "small text-muted"> {{ post.timestamp }} </p>
+    </div>
+  </div>
 </div>

@@ -44,14 +44,22 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('suggestions') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('vote') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Vote
+          <i class="fa fa-check-square-o" aria-hidden="true"></i> Vote
         </a>
       </li>
+      {% if current_user.admin == True %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_delete_movie') }}">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Add or <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+        </a>
+      </li>
+      {% endif %}
     </ul>
 
     <!-- Content -->
@@ -67,43 +75,85 @@
           <li class="breadcrumb-item active">Submit your votes!</li>
         </ol>
 
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fa fa-table"></i>
-            </div>
+        <div class="card my-4">
+          <h5 class="card-header">Please vote for your 5 favourite movies</h5>
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Votes</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Votes</th>
-                  </tr>
-                </tfoot>
-                <tbody>
+            <form action="{{ url_for('vote') }}" method="post">
+              {{ form.csrf_token }}
+              <div class="form-group">
+                <label for="post">Vote number #1</label>
+                <select class="form-control" id="vote1" name="vote1">
+                  <option>Please Select</option>
                   {% for movie in movie_list %}
-                      {% include '_movie_list.html' %}
+                    {% include '_movie_select.html' %}
                   {% endfor %}
-                </tbody>
-              </table>
-            </div>
+                </select>
+                {% for message in form.vote1.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                <label for="post">Vote number #2</label>
+                <select class="form-control" id="vote2" name="vote2">
+                  <option>Please Select</option>
+                  {% for movie in movie_list %}
+                    {% include '_movie_select.html' %}
+                  {% endfor %}
+                </select>
+                {% for message in form.vote2.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                <label for="post">Vote number #3</label>
+                <select class="form-control" id="vote3" name="vote3">
+                  <option>Please Select</option>
+                  {% for movie in movie_list %}
+                    {% include '_movie_select.html' %}
+                  {% endfor %}
+                </select>
+                {% for message in form.vote3.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                <label for="post">Vote number #4</label>
+                <select class="form-control" id="vote4" name="vote4">
+                  <option>Please Select</option>
+                  {% for movie in movie_list %}
+                    {% include '_movie_select.html' %}
+                  {% endfor %}
+                </select>
+                {% for message in form.vote4.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                <label for="post">Vote number #5</label>
+                <select class="form-control" id="vote5" name="vote5">
+                  <option>Please Select</option>
+                  {% for movie in movie_list %}
+                    {% include '_movie_select.html' %}
+                  {% endfor %}
+                </select>
+                {% for message in form.vote5.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+          {% endwith %}
         </div>
-
 
     </div>
   </div>
 </div>
 
 {% endblock %}
-

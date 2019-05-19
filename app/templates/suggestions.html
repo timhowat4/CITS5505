@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block navbar %}
-	
+
 <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
-	
+
     <a class="navbar-brand mr-1" href="{{ url_for('index') }}">MovieVote</a>
-	
+
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fa fa-bars"></i>
     </button>
@@ -25,15 +25,15 @@
       </li>
       {% endif %}
     </ul>
-	
+
   </nav>
-	
+
 {% endblock %}
-	
+
 {% block app_content%}
   <div id="wrapper">
-	
-	
+
+
     <!-- Sidebar -->
 
     <ul class="sidebar navbar-nav">
@@ -44,14 +44,22 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('suggestions') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('vote') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Vote
+          <i class="fa fa-check-square-o" aria-hidden="true"></i> Vote
         </a>
       </li>
+      {% if current_user.admin == True %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_delete_movie') }}">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Add or <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+        </a>
+      </li>
+      {% endif %}
     </ul>
 
     <!-- Content -->
@@ -64,16 +72,16 @@
           <li class="breadcrumb-item">
             <a href="#">Suggestions</a>
           </li>
-          <li class="breadcrumb-item active">Suggest Movies or Polls</li>
+          <li class="breadcrumb-item active">Suggest Movies</li>
         </ol>
 
         <div class="card my-4">
-          <h5 class="card-header">Leave a Comment:</h5>
+          <h5 class="card-header">Leave a suggestion:</h5>
           <div class="card-body">
-            <form action="" method="post" role="form">
-              {{ form.csrf }}
+            <form action="{{ url_for('suggestions') }}" method="post" role="form">
+              {{ form.csrf_token }}
               <div class="form-group">
-                <label for="post">Say something</label>
+                <label for="post">Think we've missed a movie that should be on the list? Tell us </label>
                 <input type="text" class="form-control" id="post" name="post">
                 <br>
               </div>
@@ -100,12 +108,14 @@
         {% endwith %}
 
         {% for post in posts %}
-          {% include '_post.html' %}
+          {% if post.topic_type == "Suggestion" %}
+            {% include '_post.html' %}
+          {% endif %}
         {% endfor %}
 
     </div>
   </div>
 </div>
-	
+
 
 {% endblock %}

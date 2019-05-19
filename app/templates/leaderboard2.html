@@ -49,9 +49,17 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('vote') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Vote
+          <i class="fa fa-check-square-o" aria-hidden="true"></i> Vote
         </a>
       </li>
+      {% if current_user.admin == True %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_delete_movie') }}">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Add or <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+        </a>
+      </li>
+      {% endif %}
     </ul>
 
     <!-- Content -->
@@ -77,6 +85,7 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
+                    <th>Rank</th>
                     <th>Title</th>
                     <th>Genre</th>
                     <th>Votes</th>
@@ -84,6 +93,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>Rank</th>
                     <th>Title</th>
                     <th>Genre</th>
                     <th>Votes</th>
@@ -91,13 +101,17 @@
                 </tfoot>
                 <tbody>
                   {% for movie in movie_list %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
                       {% include '_movie_list.html' %}
+                  </tr>
                   {% endfor %}
+
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          <div class="card-footer small text-muted">Last Updated {{ last_vote }}</div>
         </div>
 
         <div class="card my-4">
@@ -133,7 +147,9 @@
         {% endwith %}
 
         {% for post in posts %}
-          {% include '_post.html' %}
+          {% if post.topic_type == "leaderboard" %}
+            {% include '_post.html' %}
+          {% endif %}
         {% endfor %}
     </div>
   </div>

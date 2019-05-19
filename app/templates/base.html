@@ -9,16 +9,19 @@
   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
   <link rel ="stylesheet" href="{{ url_for('static', filename='css/sb-admin.css') }}">
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <link href="{{ url_for('static', filename='datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
   <style type="text/css">
 
     body {
     padding-top: 60px;
   }
-
+    .well {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
     .pageinfo{
       background-color: bg-dark;
       height:80px;
@@ -41,20 +44,73 @@
     .carousel-item img{
       height:100%;
     }
-  </style>
+
+    .login-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin-top: 250px;
+    margin-bottom: -90px;
+    margin-left: 35%;
+    width: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+
+    #message {
+      display:none;
+      position: relative;
+      padding: 5px;
+      margin-top: 0px;
+    }
+
+    #message p {
+      padding: 10px 35px;
+      font-size: 18px;
+    }
+
+
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+      color: green;
+    }
+
+    .valid:before {
+      position: relative;
+      left: -35px;
+    }
+
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+      color: red;
+    }
+
+    .invalid:before {
+      position: relative;
+      left: -35px;
+    }
+</style>
 </head>
 <body>
  {% block navbar %}
  <!--Navbar -->
  <div class="container-fluid">
    <div class="row">
-     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark text-light">
        <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
          <ul class="navbar-nav mr-auto">
            <li class="nav-item active">
              <a class="nav-link" href="{{ url_for('leaderboard') }}">Leaderboard <span class="sr-only">(current)</span></a>
            </li>
+           {% if current_user.admin == True %}
+           <li class="nav-item">
+             <a class="nav-link" href="{{ url_for('add_delete_movie') }}">Add or Delete Movies</a>
+           </li>
+           {% endif %}
            <li class="nav-item">
              <a class="nav-link" href="{{ url_for('suggestions') }}">Suggestions</a>
            </li>
@@ -64,6 +120,9 @@
          </ul>
          <ul class="navbar-nav ml-auto">
            {% if current_user.is_anonymous %}
+           <li class="nav-item">
+           <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+           </li>
            <li class="nav-item">
            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
            </li>
@@ -98,23 +157,73 @@
         </div>
     </nav>-->
 {% endblock %}
-{% block content %}
-    <div class="container">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-info" role="alert">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-      {% endwith %}
-    </div>
 
-        <!--{# application content needs to be provided in the app_content block #} -->
 {% block app_content %}{% endblock %}
-<!--{% endblock %}-->
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/sb-admin.min.js') }}"></script>
+
+<script>
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+// When the user clicks on the password field, show the message box
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+// When the user clicks outside of the password field, hide the message box
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+// When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+</script>
 </body>
 </html>

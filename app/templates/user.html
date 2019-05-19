@@ -1,70 +1,161 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block app_content %}
-    <div class="col-md-8">
-      <table class="table table-hover">
-        <tr>
-            <td width="256px"><img src="{{ user.avatar(256) }}"></td>
-            <td>
-                {% if user.admin == True %}
-                <h1>Admin: {{ user.username }}</h1>
-                {% else %}
-                <h1>User: {{ user.username }}</h1>
-                {% endif %}
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                {% if user.voted != True %}
-                <p> {{user.username}} has not voted </p>
-                {% endif %}
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-                {% if user == current_user %}
-                <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                <p><a href="{{ url_for('follow', username=user.username) }}">Follow</a></p>
-                {% else %}
-                <p><a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></p>
-                {% endif %}
-            </td>
-        </tr>
-      </table>
-    </div>
-    <div class ="col-md-4">
-      {% if user.voted == True %}
-      <table class="table table-hover">
-        <tr>
-            <td>
-                <h1>Movie Votes</h1>
-                <p>{{ user.movie_vote1 }}</p>
-                <p>{{ user.movie_vote2 }}</p>
-                <p>{{ user.movie_vote3 }}</p>
-                <p>{{ user.movie_vote4 }}</p>
-                <p>{{ user.movie_vote5 }}</p>
-            </td>
-        </tr>
-      </table>
+
+{% block navbar %}
+
+<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+
+    <a class="navbar-brand mr-1" href="{{ url_for('index') }}">MovieVote</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto">
+      {% if current_user.is_anonymous %}
+      <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}"> <i class="fa fa-user-o" aria-hidden="true"></i> Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+      </li>
       {% endif %}
+    </ul>
+
+  </nav>
+
+{% endblock %}
+
+{% block app_content%}
+  <div id="wrapper">
+
+
+    <!-- Sidebar -->
+
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('leaderboard') }}">
+          <i class="fa fa-imdb" aria-hidden="true"></i> Leaderboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('suggestions') }}">
+          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('vote') }}">
+          <i class="fa fa-check-square-o" aria-hidden="true"></i> Vote
+        </a>
+      </li>
+      {% if current_user.admin == True %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_delete_movie') }}">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Add or <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+
+    <!-- Content -->
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            {% if user.admin == True %}
+            <h1>Admin: {{ user.username }}</h1>
+            {% else %}
+            <h1>User: {{ user.username }}</h1>
+            {% endif %}
+          </li>
+        </ol>
+
+        <!-- Area Chart Example-->
+        <div class = "container-fluid">
+          <div class= "row">
+            <div class = "col-md-3">
+              <img src="{{ user.avatar(256) }}">
+            </div>
+            <div class = "col-md-5">
+              {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+              {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+              {% if user.voted != True %}
+              <p> {{user.username}} has not voted </p>
+              {% endif %}
+              <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+              {% if user == current_user %}
+              <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+              {% elif not current_user.is_following(user) %}
+              <p><a href="{{ url_for('follow', username=user.username) }}">Follow</a></p>
+              {% else %}
+              <p><a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></p>
+              {% endif %}
+            </div>
+            <div class = "col-md-4">
+              {% if user.voted == True %}
+              <table class="table table-hover">
+                <tr>
+                    <td>
+                        <h1>Movie Votes</h1>
+                        <p>{{ user.movie_vote1 }}</p>
+                        <p>{{ user.movie_vote2 }}</p>
+                        <p>{{ user.movie_vote3 }}</p>
+                        <p>{{ user.movie_vote4 }}</p>
+                        <p>{{ user.movie_vote5 }}</p>
+                    </td>
+                </tr>
+              </table>
+              {% endif %}
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+      {% if user.admin == True %}
+      <div class="container-fluid">
+        <div class = "row">
+          <div class = "col-md-4">
+            <div class="card my-4">
+              <h5 class="card-header">Grant Admin Status</h5>
+              <div class="card-body">
+                <form action="{{ url_for('user', username=current_user.username) }}" method="post">
+                  {{ admin_form.csrf_token }}
+                  <div class="form-group">
+                    <label for="post">Select user to make admin</label>
+                    <select class="form-control" id="username" name="username">
+                      <option>Please Select</option>
+                      {% for user in users %}
+                        {% include '_user_select.html' %}
+                      {% endfor %}
+                      </select>
+                      {% for message in admin_form.username.errors %}
+                        <div style="color:red;"> {{ message }} <div>
+                      {% endfor %}
+                    <br>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
     </div>
-    {% if user.admin == True %}
-    <div class = "col-md-4">
-      {{ wtf.quick_form(admin_form) }}
-    </div>
-    {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> Newer posts
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    Older posts <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+  </div>
+
 {% endblock %}
