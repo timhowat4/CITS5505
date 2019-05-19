@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, Form
 from wtforms.validators import ValidationError, DataRequired, InputRequired, Email, EqualTo, Length
 from app.models import User, Movie
 
@@ -42,7 +42,7 @@ class EditProfileForm(FlaskForm):
             if user is not None:
                 raise ValidationError('Please use a different username.')
 
-class PostForm(FlaskForm):
+class PostForm(Form):
     post = TextAreaField('Say something:', validators=[
         DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Submit')
@@ -95,17 +95,33 @@ class VoteForm(FlaskForm):
         if vote2.data == 'Please Select':
             raise ValidationError('Please select a movie')
 
+        if vote2.data == self.vote1.data:
+            raise ValidationError('You can only vote for the same movie once, please choose a different movie.')
+
     def validate_vote3(self, vote3):
         if vote3.data == 'Please Select':
             raise ValidationError('Please select a movie')
+
+        if vote3.data in {self.vote1.data, self.vote2.data}:
+            raise ValidationError('You can only vote for the same movie once, please choose a different movie.')
 
     def validate_vote4(self, vote4):
         if vote4.data == 'Please Select':
             raise ValidationError('Please select a movie')
 
+        if vote4.data in {self.vote1.data, self.vote2.data, self.vote3.data}:
+            raise ValidationError('You can only vote for the same movie once, please choose a different movie.')
+
+
     def validate_vote5(self, vote5):
         if vote5.data == 'Please Select':
             raise ValidationError('Please select a movie')
+
+        if vote5.data in {self.vote1.data, self.vote2.data, self.vote3.data, self.vote4.data}:
+            raise ValidationError('You can only vote for the same movie once, please choose a different movie.')
+
+
+
 
 class SuggestForm(FlaskForm):
     post = StringField('Suggest a movie to add', validators=[DataRequired()])
@@ -120,7 +136,7 @@ class AdminForm(FlaskForm):
     username = SelectField('Select a user to grant admin status', choices =[('Please Select', 'Please Select')])
     submit = SubmitField('Submit')
 
-    def validate_user(self, username):
+    def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user.admin is True:
             raise ValidationError('This user is already an admin')
