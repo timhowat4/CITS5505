@@ -16,11 +16,13 @@
   <link href="{{ url_for('static', filename='datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
   <style type="text/css">
 
+  
+
     body {
     padding-top: 60px;
   }
     .well {
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.625);
     }
     .pageinfo{
       background-color: bg-dark;
@@ -142,23 +144,7 @@
      </nav>
    </div>
  </div>
-<!--/.Navbar -->
 
-
-
-
-<!--                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>-->
 {% endblock %}
 
 {% block app_content %}{% endblock %}
