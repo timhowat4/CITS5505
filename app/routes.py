@@ -239,24 +239,24 @@ def add_movie():
 @login_required
 def delete_movie():
 
-    delete_form = DeleteMovieForm(request.form)
+    form = DeleteMovieForm(request.form)
 
     if request.method == 'POST':
 
         if "delete" in request.form:
             title = request.form['title']
 
-            if delete_form.validate_on_submit():
+            if form.validate_on_submit():
                 delete_movie = Movie.query.filter_by(title=title).first()
                 db.session.delete(delete_movie)
                 db.session.commit()
                 flash('You successfully deleted the movie')
-                return redirect(url_for('add_delete_movie'))
+                return redirect(url_for('delete_movie'))
 
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
 
-    return render_template('delete2.html', title='Delete Movie', movie_list=movie_list, delete_form=delete_form)
+    return render_template('delete2.html', title='Delete Movie', movie_list=movie_list, form=form)
 
 
 @app.route('/vote', methods=['GET', 'POST'])
