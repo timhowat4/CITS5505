@@ -215,17 +215,16 @@ def add_movie():
     add_form = CreateMovieForm(request.form)
 
     if request.method == 'POST':
+        
+        title = request.form['title']
+        genre = request.form['genre']
 
-        if "add" in request.form:
-            title = request.form['title']
-            genre = request.form['genre']
-
-            if add_form.validate_on_submit():
-                new_movie = Movie(title=title, genre=genre, votes=0)
-                db.session.add(new_movie)
-                db.session.commit()
-                flash('Congratulations, you are now added a new movie')
-                return redirect(url_for('add_movie'))
+        if add_form.validate_on_submit():
+            new_movie = Movie(title=title, genre=genre, votes=0)
+            db.session.add(new_movie)
+            db.session.commit()
+            flash('Congratulations, you are now added a new movie')
+            return redirect(url_for('add_movie'))
 
 
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
@@ -243,15 +242,14 @@ def delete_movie():
 
     if request.method == 'POST':
 
-        if "delete" in request.form:
-            title = request.form['title']
+        title = request.form['title']
 
-            if form.validate_on_submit():
-                delete_movie = Movie.query.filter_by(title=title).first()
-                db.session.delete(delete_movie)
-                db.session.commit()
-                flash('You successfully deleted the movie')
-                return redirect(url_for('delete_movie'))
+        if form.validate_on_submit():
+            delete_movie = Movie.query.filter_by(title=title).first()
+            db.session.delete(delete_movie)
+            db.session.commit()
+            flash('You successfully deleted the movie')
+            return redirect(url_for('delete_movie'))
 
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
