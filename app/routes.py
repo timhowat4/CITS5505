@@ -256,7 +256,7 @@ def delete_movie():
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
 
-    return render_template('delete2.html', title='Delete Movie', movie_list=movie_list, form=form)
+    return render_template('delete_movie.html', title='Delete Movie', movie_list=movie_list, form=form)
 
 
 @app.route('/vote', methods=['GET', 'POST'])
