@@ -45,7 +45,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('suggestions') }}">
-          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies or Polls
+          <i class="fa fa-commenting" aria-hidden="true"></i> Suggest Movies
         </a>
       </li>
       <li class="nav-item">
@@ -55,11 +55,16 @@
       </li>
       {% if current_user.admin == True %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('add_delete_movie') }}">
+        <a class="nav-link" href="{{ url_for('add_movie') }}">
           <i class="fa fa-plus-square" aria-hidden="true"></i>
-          Add or <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+          Add Movies
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('delete_movie') }}">
+          <i class="fa fa-minus-square" aria-hidden="true"></i> Delete Movies
+        </a>
+      </li>      
       {% endif %}
     </ul>
 

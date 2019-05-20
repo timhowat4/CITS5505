@@ -26,7 +26,7 @@
       {% endif %}
     </ul>
 
-</nav>
+  </nav>
 
 {% endblock %}
 
@@ -75,90 +75,61 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Vote</a>
+            <a href="#">Add Movies</a>
           </li>
-          <li class="breadcrumb-item active">Submit your votes!</li>
         </ol>
 
         <div class="card my-4">
-          <h5 class="card-header">Please vote for your 5 favourite movies</h5>
+          <h5 class="card-header">Add Movie</h5>
           <div class="card-body">
-            <form action="{{ url_for('vote') }}" method="post">
-              {{ form.csrf_token }}
+            <form action="{{ url_for('add_movie') }}" method="post" role="form">
+              {{ add_form.csrf_token }}
               <div class="form-group">
-                <label for="post">Vote number #1</label>
-                <select class="form-control" id="vote1" name="vote1">
+                <label for="title">Movie Title</label>
+                <input type="text" class="form-control" id="title" name="title">
+                {% for message in add_form.title.errors %}
+                  <div style="color:red;"> {{ message }} </div>
+                {% endfor %}
+                <br>
+              </div>
+              <div class="form-group">
+                <label for="genre">Genre</label>
+                <select class="form-control" id="genre" name="genre">
                   <option>Please Select</option>
-                  {% for movie in movie_list %}
-                    {% include '_movie_select.html' %}
+                  {% for genre in genre_list %}
+                    <option>{{ genre }}</option>
                   {% endfor %}
                 </select>
-                {% for message in form.vote1.errors %}
+                {% for message in add_form.genre.errors %}
                   <div style="color:red;"> {{ message }} </div>
                 {% endfor %}
               </div>
-              <div class="form-group">
-                <label for="post">Vote number #2</label>
-                <select class="form-control" id="vote2" name="vote2">
-                  <option>Please Select</option>
-                  {% for movie in movie_list %}
-                    {% include '_movie_select.html' %}
-                  {% endfor %}
-                </select>
-                {% for message in form.vote2.errors %}
-                  <div style="color:red;"> {{ message }} </div>
-                {% endfor %}
-              </div>
-              <div class="form-group">
-                <label for="post">Vote number #3</label>
-                <select class="form-control" id="vote3" name="vote3">
-                  <option>Please Select</option>
-                  {% for movie in movie_list %}
-                    {% include '_movie_select.html' %}
-                  {% endfor %}
-                </select>
-                {% for message in form.vote3.errors %}
-                  <div style="color:red;"> {{ message }} </div>
-                {% endfor %}
-              </div>
-              <div class="form-group">
-                <label for="post">Vote number #4</label>
-                <select class="form-control" id="vote4" name="vote4">
-                  <option>Please Select</option>
-                  {% for movie in movie_list %}
-                    {% include '_movie_select.html' %}
-                  {% endfor %}
-                </select>
-                {% for message in form.vote4.errors %}
-                  <div style="color:red;"> {{ message }} </div>
-                {% endfor %}
-              </div>
-              <div class="form-group">
-                <label for="post">Vote number #5</label>
-                <select class="form-control" id="vote5" name="vote5">
-                  <option>Please Select</option>
-                  {% for movie in movie_list %}
-                    {% include '_movie_select.html' %}
-                  {% endfor %}
-                </select>
-                {% for message in form.vote5.errors %}
-                  <div style="color:red;"> {{ message }} </div>
-                {% endfor %}
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" name = "add" class="btn btn-primary">Submit</button>
             </form>
           </div>
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-          {% endwith %}
         </div>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
 
     </div>
   </div>
 </div>
+
 
 {% endblock %}

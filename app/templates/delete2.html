@@ -75,22 +75,22 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Suggestions</a>
+            <a href="#">Add or Delete Movies</a>
           </li>
-          <li class="breadcrumb-item active">Suggest Movies</li>
         </ol>
 
         <div class="card my-4">
-          <h5 class="card-header">Leave a suggestion:</h5>
+          <h5 class="card-header">Delete Movie</h5>
           <div class="card-body">
-            <form action="{{ url_for('suggestions') }}" method="post" role="form">
-              {{ form.csrf_token }}
-              <div class="form-group">
-                <label for="post">Think we've missed a movie that should be on the list? Tell us </label>
-                <input type="text" class="form-control" id="post" name="post">
-                <br>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <form action="{{ url_for('delete_movie') }}" method="post" role="form">
+              {{ delete_form.csrf_token }}
+              <select class="form-control" id="title" name="title">
+                <option>Please Select</option>
+                {% for movie in movie_list %}
+                  {% include '_movie_select.html' %}
+                {% endfor %}
+              </select>
+              <button type="submit" name="delete" class="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>
@@ -112,15 +112,10 @@
             {% endif %}
         {% endwith %}
 
-        {% for post in posts %}
-          {% if post.topic_type == "Suggestion" %}
-            {% include '_post.html' %}
-          {% endif %}
-        {% endfor %}
-
     </div>
   </div>
 </div>
 
 
 {% endblock %}
+

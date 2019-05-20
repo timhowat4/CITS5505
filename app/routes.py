@@ -208,11 +208,10 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
-@app.route('/add_delete_movie', methods=['GET', 'POST'])
+@app.route('/add_movie', methods=['GET', 'POST'])
 @login_required
-def add_delete_movie():
+def add_movie():
 
-    delete_form = DeleteMovieForm(request.form)
     add_form = CreateMovieForm(request.form)
 
     if request.method == 'POST':
@@ -226,9 +225,25 @@ def add_delete_movie():
                 db.session.add(new_movie)
                 db.session.commit()
                 flash('Congratulations, you are now added a new movie')
-                return redirect(url_for('add_delete_movie'))
+                return redirect(url_for('add_movie'))
 
-        elif "delete" in request.form:
+
+    movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
+    movie_list = movies.all()
+    genre_list = ['Please Select','Action','Comedy','Drama', 'Horror','Adventure']
+
+    return render_template('add_movie.html', title='Add Movie', movie_list=movie_list, add_form=add_form, genre_list=genre_list)
+
+
+@app.route('/delete_movie', methods=['GET', 'POST'])
+@login_required
+def delete_movie():
+
+    delete_form = DeleteMovieForm(request.form)
+
+    if request.method == 'POST':
+
+        if "delete" in request.form:
             title = request.form['title']
 
             if delete_form.validate_on_submit():
@@ -240,9 +255,8 @@ def add_delete_movie():
 
     movies = db.session.query(Movie).order_by(Movie.votes.desc()).from_self()
     movie_list = movies.all()
-    genre_list = ['Please Select','Action','Comedy','Drama', 'Horror','Adventure']
 
-    return render_template('add_delete_movie.html', title='Add Movie', title2='Delete Movie', movie_list=movie_list, add_form=add_form, delete_form=delete_form, genre_list=genre_list)
+    return render_template('delete2.html', title='Delete Movie', movie_list=movie_list, delete_form=delete_form)
 
 
 @app.route('/vote', methods=['GET', 'POST'])
@@ -371,3 +385,9 @@ def suggestions():
     ##    page, app.config['POSTS_PER_PAGE'], False)
     ##osts = posts.filter_by(topic_type="Suggestion")
     return render_template("suggestions.html", title="suggestions", form=form, posts=posts)
+
+@app.route('/user/<username>/popup')
+@login_required
+def user_popup(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user_popup.html', user=user)
