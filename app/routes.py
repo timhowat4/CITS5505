@@ -239,6 +239,11 @@ def add_movie():
 def delete_movie():
 
     form = DeleteMovieForm(request.form)
+    choices = [('Please Select', 'Please Select')]
+    movies = Movie.query.all()
+    for m in movies:
+        choices.append((m.title, m.title))
+    form.title.choices = choices
 
     if request.method == 'POST':
 
